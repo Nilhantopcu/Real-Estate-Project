@@ -1,0 +1,210 @@
+﻿@model G8Cozy.Models.user
+
+@{
+    ViewData["Title"] = "Create";
+    string message = TempData["msg"] as string;
+}
+@section Style{
+
+    <style>
+        .guest {
+            text-decoration: none;
+            color: white;
+        }
+
+            .guest:hover {
+                color: black;
+            }
+
+        .alert {
+        font-weight: 1000;
+        padding: 10px;
+        text-transform: capitalize;
+        position: absolute;
+        top: 100px;
+        color: #DB7;
+        text-align:center;
+          width: calc(100% - 20px);
+        }
+    </style>
+    <link rel="stylesheet" href="~/css/signin.css" />
+}
+
+
+
+ <div class="mid" style="height: 100vh">
+
+  <div class="log">
+    <div id="log-in" class="log-ac msgGone">
+      <h3>Sign In</h3>
+      <div class="log-icon">
+        <a href="#"><i class="fab fa-google"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <button class="log-err log-err-btn" id="adminlog">
+        Sign In as Admin
+      </button>
+        <form asp-action="Logme" class="log-form">
+            <div class="log-one">
+                <input asp-for="Name"  type="text" name="name" placeholder="name" />
+                <p>OR</p>
+                <input asp-for="Email" type="email" name="email" placeholder="email" />
+            </div>
+            <input asp-for="Password" type="password" name="password" placeholder="password" />
+        <a href="" class="log-err">forget your password ?</a>
+
+                <input type="submit" value="Login" class="btn btn-primary" />
+      </form>
+    </div>
+    <div id="log-up" class="log-ac">
+      <div class="log-noper">
+        <h3>Sign Up</h3>
+        <div class="log-icon">
+          <a href="#"><i class="fab fa-google"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p class="log-err">Or use your email & password</p>
+        <form asp-action="Create"   class="log-form">
+            <input asp-for="Name" type="text" name="name" placeholder="name" />
+            <input asp-for="Email" type="email" name="email" placeholder="email" />
+            <input asp-for="Password" type="password" name="password" placeholder="password" />
+            <span> Agent login </span>
+            <input asp-for="type" type="checkbox" name="type"/>
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </form>
+      </div>
+      <div class="log-noper log-nope log-adminstyle">
+        <h3>Admin Login</h3>
+        <form asp-action="AdminLog" class="log-form">
+            <input asp-for="Name" type="text" name="name" placeholder="name" />
+            <input asp-for="Password" type="password" name="password" placeholder="password" />
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </form>
+      </div>
+    </div>
+    <div id="log-block" class="tochangeStart">
+            @if (!string.IsNullOrEmpty(message))
+            {
+                <div class="alert alert-info">
+                    @message
+                </div>
+
+            }
+      <div id="log-in-msg" class="log-ac log-type msgGone">
+        <a href="home.html"><img src="~/imgs/g8rees.png" /></a>
+        <h3>Welcome Back</h3>
+        <p>where have you been ?</p>
+        <button onclick="if(disable) active()">Sign up</button>
+      </div>
+      <div id="log-up-msg" class="log-ac log-type">
+        <a href="home.html"><img src="~/imgs/g8rees.png" /></a>
+        <h3>Hello!</h3>
+        <p>Check for new opportunities</p>
+        <button onclick="if(disable) active()">Sign In</button>
+        <div><br>
+            <a href="/"  class="guest"> Continue as Guest </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        const login = document.getElementById("log-in");
+        const logup = document.getElementById("log-up");
+        const loginmsg = document.getElementById("log-in-msg");
+        const logupmsg = document.getElementById("log-up-msg");
+        const logblock = document.getElementById("log-block");
+        const lognoper = document.getElementsByClassName("log-noper");
+        const time = 1000;
+        document.documentElement.style.setProperty("--time", `${time}ms`);
+
+        let admined = false;
+        let disable = true;
+        let page = 1;
+        let lc = () => {
+            login.classList.toggle("msgGone");
+            loginmsg.classList.toggle("msgGone");
+            logup.classList.toggle("msgGone");
+            logupmsg.classList.toggle("msgGone");
+        };
+
+        let active = (e) => {
+            disable = false;
+            page = page == 1 ? 0 : 1;
+
+            // buton toggle edildiğinde
+            if (page == 0) {
+                // Log sola
+                logblock.classList.add("tochange");
+                logblock.classList.add("tochangeEnd");
+                logblock.classList.remove("tochangeStart");
+
+                logupmsg.classList.add("log-toleftmsg");
+                logup.classList.add("log-toright");
+
+                // Loglar değişir
+                setTimeout(() => {
+                    lc();
+
+                    login.classList.add("log-fromleft");
+                    loginmsg.classList.add("log-fromrightmsg");
+                }, time / 2);
+            } else {
+                // Log sağa
+                loginmsg.classList.add("log-torightmsg");
+                login.classList.add("log-toleft");
+
+                logblock.classList.add("tochangeR");
+                logblock.classList.remove("tochangeEnd");
+                logblock.classList.add("tochangeStart");
+
+                // admin
+                if (e == "admin") {
+                    lognoper[0].classList.add("log-nope");
+                    lognoper[1].classList.remove("log-nope");
+                } else {
+                    lognoper[0].classList.remove("log-nope");
+                    lognoper[1].classList.add("log-nope");
+                }
+
+                setTimeout(() => {
+                    lc();
+
+                    logup.classList.add("log-fromright");
+                    logupmsg.classList.add("log-fromleftmsg");
+                }, time / 2);
+            }
+
+            // Reset animation
+            setTimeout(() => {
+                logblock.classList.remove("tochange");
+                logblock.classList.remove("tochangeR");
+
+                login.classList.remove("log-fromleft");
+                loginmsg.classList.remove("log-fromrightmsg");
+                login.classList.remove("log-toleft");
+                loginmsg.classList.remove("log-torightmsg");
+
+                logup.classList.remove("log-fromright");
+                logupmsg.classList.remove("log-fromleftmsg");
+                logup.classList.remove("log-toright");
+                logupmsg.classList.remove("log-toleftmsg");
+                loginmsg.classList.add();
+                disable = true;
+            }, time);
+        };
+
+        adminlog = document.getElementById("adminlog");
+        adminlog.onclick = () => {
+            if (disable) active("admin");
+        };
+    </script>
+}

@@ -1,0 +1,13 @@
+﻿.headno {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 100px;
+}
+
+@media screen and (max-width: 400px) {
+    .headno {
+        padding: 10px;
+        grid-template-columns: 1fr;
+    }
+}

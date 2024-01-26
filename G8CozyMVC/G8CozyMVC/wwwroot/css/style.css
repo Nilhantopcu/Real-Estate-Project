@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif&family=Poppins:wght@300&display=swap');
+
+body {
+    margin: 0;
+}
+.search-container{
+    height:  400px;
+    background:rgba(0, 0, 0, 0.5) url("../imgs/searchimg.png") no-repeat 0% 82%;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.search-txt p {
+    font-family: sans-serif;
+    word-spacing: 5px;
+    color:#fff;
+    font-weight: 800;
+    font-size: 30px;
+    margin: 0;
+    line-height: 80px;
+    text-align: center;
+    text-shadow: 0 0 20px #000;
+}
+.button-home {
+    background: rgb(179, 86, 110);
+    padding: 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;    
+}
+.search-input {
+    letter-spacing: 2px; 
+    border: none;
+    width: 50vw;
+    line-height: 60px;
+    border-radius: 6px 0 0 6px;
+    padding: 0 0 0 20px ;
+    font-weight: 600;
+}
+.search-button {
+    border-radius: 0 6px 10px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+.search-button:hover{
+    background: #f1f1f1;
+}
+.search-button svg{
+    width:20px;
+}
+.search-mix{
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    line-height: 80px;
+}
